@@ -1,0 +1,98 @@
+/* Général ------------------------------------------------------------------------------------- */
+
+body, p, legend, label, input {
+    font: normal 8pt verdana, helvetica, sans-serif;
+}
+
+fieldset {
+    padding: 10px;
+    border: 1px #0568CD solid;
+    margin-left: 140px;
+    margin-right: 140px;
+}
+
+legend {
+	margin-right: 40px;
+    font-weight: bold;
+    color: #0568CD;
+}
+
+/* Forms --------------------------------------------------------------------------------------- */
+
+form label {
+    float: left;
+    width: 200px;
+    margin: 3px 0px 0px 0px;
+}
+
+form input {
+    margin: 3px 3px 0px 0px;
+    border: 1px #999 solid;
+}
+
+form input.sansLabel {
+    margin-left: 200px;
+}
+
+form .requis {
+    color: #c00;
+}
+form .erreur {
+    color: #900;
+}
+form .succes {
+    color: #090;
+}
+/* Tables --------------------------------------------------------------------------------------- */
+table
+{
+border-collapse:collapse;
+width:100%;
+max-width:700px;
+min-width:400px;
+text-align:center;
+margin: auto;
+}
+
+caption
+{
+caption-side:bottom;
+font-weight:bold;
+font-style:italic;
+margin:4px;
+}
+
+table,th, td
+{
+border: 1px solid gray;
+}
+
+th, td
+{
+height: 24px;
+padding:4px;
+vertical-align:middle;
+}
+/* Button --------------------------------------------------------------------------------------- */
+
+div {
+ 
+    margin-left: 50px;
+    margin-right:100px;
+}
+.button {
+	    background-color: #c0c0c0; /* Green */
+    border: 1px solid gray;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+
+}
+
+.button:hover {
+    background-color: #0080ff;
+}
