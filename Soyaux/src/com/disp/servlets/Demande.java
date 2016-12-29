@@ -71,7 +71,7 @@ public class Demande extends HttpServlet {
 				PrintWriter out = response.getWriter();  
 				response.setContentType("text/html");  
 				out.println("<script type=\"text/javascript\">");  
-				out.println("prompt('Votre Signalement a été pris en compte vous recevez un email lors du traitement de ce dernier');");  
+				out.println("alert('Votre Signalement a été pris en compte vous recevez un email lors du traitement de ce dernier');");  
 				out.println("</script>");
 			} catch (SQLException e1) {
 				e1.printStackTrace();

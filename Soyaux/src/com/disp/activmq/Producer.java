@@ -19,7 +19,7 @@ import javax.jms.TextMessage;
 /**
  * Hello world!
  */
-public class App {
+public class Producer {
 
  
     public static void Producer(Object body, String nameQueue)  {
