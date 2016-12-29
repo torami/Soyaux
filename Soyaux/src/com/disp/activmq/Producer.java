@@ -22,7 +22,7 @@ import javax.jms.TextMessage;
 public class Producer {
 
  
-    public static void Producer(Object body, String nameQueue)  {
+    public static void Produce(Object body, String nameQueue)  {
    
             try {
                 // Create a ConnectionFactory

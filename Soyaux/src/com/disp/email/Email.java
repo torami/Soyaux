@@ -11,7 +11,7 @@ import javax.mail.internet.MimeMessage;
 
 public class Email {
 
-	public void SendMyEmail (String reciver, String body){
+	public static void SendMyEmail (String reciver, String body){
 
 		Properties props = new Properties();
 		props.put("mail.smtp.auth", "true");

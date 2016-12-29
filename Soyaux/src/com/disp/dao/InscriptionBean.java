@@ -115,8 +115,9 @@ public class InscriptionBean{
 		}
 		return null;}
 	public static void main(String args[]) throws SQLException{  
-		 getSignalement();
-		 System.out.println(Authentification("rami.torkhani@gmail.com","Snoopy"));
+//		create(1, "Tester", "tester@test.test", "password");
+//		getSignalement();
+		 System.out.println(Authentification("tester@test.test","password"));
 //		updateState(3);
 //		Demande dem = getSignalementByID(1);
 	

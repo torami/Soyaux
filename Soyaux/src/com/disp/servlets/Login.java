@@ -1,5 +1,6 @@
 package com.disp.servlets;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,6 +10,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.disp.dao.InscriptionBean;
 
 import sun.rmi.server.Dispatcher;
 
@@ -42,8 +45,16 @@ public class Login extends HttpServlet {
 		/* Validation du champ email. */
 		try {
 			validationEmail( email );
-			   RequestDispatcher rd=request.getRequestDispatcher("Signalement");  
-		        rd.forward(request,response);  
+			if(InscriptionBean.Authentification(email, motDePasse)){
+			       response.sendRedirect("demande");   } 
+			else {
+				PrintWriter out = response.getWriter();  
+				response.setContentType("text/html");  
+				out.println("<script type=\"text/javascript\">");  
+				out.println("alert('ces corrdonnées n'existent pas dans notre base de données');");  
+				out.println("</script>");
+				response.sendRedirect("login");
+			}
 		} catch ( Exception e ) {
 			erreurs.put( CHAMP_EMAIL, e.getMessage() );
 		}
@@ -51,8 +62,7 @@ public class Login extends HttpServlet {
         request.setAttribute( ATT_ERREURS, erreurs );
         request.setAttribute( ATT_RESULTAT, resultat );
 
-        /* Transmission de la paire d'objets request/response à notre JSP */
-        this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
+
 	}
 
 	/**
