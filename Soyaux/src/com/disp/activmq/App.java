@@ -3,11 +3,16 @@ package com.disp.activmq;
 import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
 
+import com.disp.bean.Demande;
+
+import java.io.Serializable;
+
 import javax.jms.Connection;
 import javax.jms.DeliveryMode;
 import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.MessageProducer;
+import javax.jms.ObjectMessage;
 import javax.jms.Session;
 import javax.jms.TextMessage;
  
@@ -17,7 +22,7 @@ import javax.jms.TextMessage;
 public class App {
 
  
-    public static void Producer(String body, String nameQueue)  {
+    public static void Producer(Object body, String nameQueue)  {
    
             try {
                 // Create a ConnectionFactory
@@ -40,7 +45,7 @@ public class App {
                 producer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
  
                 // Create a messages
-                TextMessage message = session.createTextMessage(body);
+                ObjectMessage message = session.createObjectMessage((Serializable) body);
  
                 // Tell the producer to send the message
                 System.out.println("Sent message: "+ message.hashCode() + " : " + Thread.currentThread().getName());

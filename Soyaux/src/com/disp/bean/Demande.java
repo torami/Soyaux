@@ -1,5 +1,8 @@
 package com.disp.bean;
-public class Demande {
+
+import java.io.Serializable;
+
+public class Demande  implements Serializable {
 	private Integer id;
 	private String importance;
 	private String object;
