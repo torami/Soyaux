@@ -1,18 +1,16 @@
 package com.disp.servlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.jms.JMSException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.disp.dao.*;
-import com.disp.publishsubscribe.Producer;
+import com.disp.constants.*;
+import com.disp.event.EventManager;
 
 @WebServlet("/Signalement")
 public class Demande extends HttpServlet {
@@ -25,13 +23,11 @@ public class Demande extends HttpServlet {
 	public static final String PLACE = "adresse";
 	public static final String ATT_ERREURS  = "erreurs";
 	public static final String ATT_RESULTAT = "resultat";
-
-
+	com.disp.bean.Demande sig = new com.disp.bean.Demande();
+	Const cs = new Const();
 	public Demande() {
 		super();
-
 	}
-
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {    
 		this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
@@ -39,117 +35,63 @@ public class Demande extends HttpServlet {
 
 	public void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException{
 		/* récupération des champs du formulaire. */
-		String resultat;
-		Map<String, String> erreurs = new HashMap<String, String>();
 		String importance = request.getParameter( IMPORTANCE );
 		String objet = request.getParameter( OBJECT );
 		String description = request.getParameter( DESCRIPTION );
 		String commentaire = request.getParameter( COMMENT );
 		String adresse = request.getParameter( PLACE );
-		if(importance!= null){
+		/* récupération de l'evenement*/
+		String event_proprete = request.getParameter( cs.EVENT_PROPRETE ); 
+		String event_eclairage = request.getParameter( cs.EVENT_Eclairage ); 
+		String event_sec = request.getParameter( cs.EVENT_Sécurité ); 
+		String event_ev = request.getParameter( cs.EVENT_EspacesVerts ); 
+		String event_trans = request.getParameter( cs.EVENT_Transport); 
+		
+		/*s'assurer de la complétude des champs*/
+		if(InputState(importance, objet, description, commentaire, adresse) == false){
+			sig.setId(1);
+			sig.setComment(commentaire);
+			sig.setDescription(description);
+			sig.setImportance(importance);
+			sig.setPlace(adresse);
+			sig.setObject(objet);
+			sig.setIdreporter(1);
+		}
+		
+		/* Récupération du choix de l'évenement*/
+		String event = cs.EventType(event_eclairage, event_proprete, event_ev, event_sec, event_trans);
+
+		/*Call Event Manager*/
+		if( sig != null){
+			EventManager.ProduceEvent(sig, event);
 			try {
-			DemandesBean.create(1, importance, objet, description, commentaire, adresse, 1);
-			
+				DemandesBean.create(1, importance, objet, description, commentaire, adresse, 1);
+				request.setAttribute("loginError","Incorrect password");
+				//servlet code
+				PrintWriter out = response.getWriter();  
+				response.setContentType("text/html");  
+				out.println("<script type=\"text/javascript\">");  
+				out.println("prompt('Votre Signalement a été pris en compte vous recevez un email lors du traitement de ce dernier');");  
+				out.println("</script>");
 			} catch (SQLException e1) {
-			e1.printStackTrace();
-		}}
-		System.out.println(importance);
-		System.out.println(objet);
-		System.out.println(description);
-		System.out.println(commentaire);
-		System.out.println(adresse);
+				e1.printStackTrace();
+			}}
 
-		/* Validation du champ Importance. */
-		try {
-			validationImportance( importance );
-		} catch ( Exception e ) {
-			erreurs.put( IMPORTANCE, e.getMessage() );
-		}
-		/* Validation du champ Object. */
-		try {
-			validationObjet( objet );
-		} catch ( Exception e ) {
-			erreurs.put( OBJECT, e.getMessage() );
-		}
-		/* Validation du champ Description. */
-		try {
-			validationDescritpion( description );
-		} catch ( Exception e ) {
-			erreurs.put( DESCRIPTION, e.getMessage() );
-		}
-
-		/* Validation du champ commentaire. */
-		try {
-			validationCommentaire( commentaire );
-		} catch ( Exception e ) {
-			erreurs.put( COMMENT, e.getMessage() );
-		}
-		/* Validation du champ Place. */
-		try {
-			validationPlace(adresse);
-		} catch ( Exception e ) {
-			erreurs.put( PLACE, e.getMessage() );
-		}
-		/* Initialisation du résultat global de la validation. */
-		if ( erreurs.isEmpty() ) {
-			resultat = "Votre notification etait pris en compte, nous s'efforsons à résoudre cet incident";
-		} else {
-			resultat = "Votre réclamation n'a pas était pris en compte";
-		}
-
-		/* Stockage du résultat et des messages d'erreur dans l'objet request */
-		request.setAttribute( ATT_ERREURS, erreurs );
-		request.setAttribute( ATT_RESULTAT, resultat );
-		/*Sauvegarder les datas dans la base de donnees  */
-//		SignalementDAO.create(1,importance,objet,description,commentaire,adresse,1);
-
-		/* Transmission de la paire d'objets request/response � notre JSP */
-		this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
+		/* Transmission de la paire d'objets request/response à notre JSP */
+//		this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
 	}
 
-	private void validationImportance( String importance ) throws Exception{
-		if ( !importance.isEmpty() ) {
-			if (importance.equals("Urgent") || importance.equals("Moyen") ||importance.equals("Faible")) {
 
-			}
-
-			else {
-				throw new Exception( "Merci de saisir importance valide" );
-			}
-		} else {
-			throw new Exception( "Merci de saisir une importance." );
+	private boolean InputState( String importance, String objet,String description,String commentaire, String adresse) {
+		
+		if (description.isEmpty() && importance.isEmpty() && objet.isEmpty() && commentaire.isEmpty() && adresse.isEmpty()) 
+		{	System.out.println("ALL RIGHT");
+			return true;
 		}
+		else
+			return false;
+		
 	}
-	private void validationObjet( String objet) throws Exception{
-		if (!objet.isEmpty() ) {
-			System.out.println("Objet valide");
-		} else {
-			throw new Exception("Merci de saisir un objet pour votre demande.");
-		}
-	}
-
-	private void validationDescritpion( String description ) throws Exception	
-
-	{if (!description.isEmpty() ) {
-		System.out.println("description valide");
-	} else {
-		throw new Exception("Merci de saisir une description pour votre demande.");
-	}
-	}
-	private void validationCommentaire( String commentaire ) throws Exception
-	{if (!commentaire.isEmpty()) {
-		System.out.println("commentaire valide");
-	} else {
-		throw new Exception("Merci de saisir un commentaire pour votre demande.");
-	}
-	}
-	private void validationPlace( String adresse ) throws Exception
-	{if (!adresse.isEmpty()  ) {
-		System.out.println("adresse valide");
-	} else {
-		throw new Exception("Merci de saisir une adresse pour votre demande.");
-	}
-}
 	
 
 

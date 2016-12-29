@@ -6,7 +6,7 @@ import com.disp.bean.Demande;
 public class DemandesBean{  
 
 
-	public static  void create(int id, String importance, String object,String description,String comment,String place,int idreporter) throws SQLException {
+	public static void create(int id, String importance, String object,String description,String comment,String place,int idreporter) throws SQLException {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 
@@ -110,7 +110,7 @@ public class DemandesBean{
 		return null;}
 	
 	public static void main(String args[]) throws SQLException{  
-//		create(3,"Urgent","Lampe","lampe a changé","RAS","120 boulevard",1);
+//		create(3,"Urgent","Lampe","lampe a changï¿½","RAS","120 boulevard",1);
 		getSignalement();
 //		updateState(3);
 //		Demande dem = getSignalementByID(1);

@@ -34,7 +34,7 @@ public class Login extends HttpServlet {
 	public void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException{
 		String resultat = null;
 		Map<String, String> erreurs = new HashMap<String, String>();
-		/* Récupération des champs du formulaire. */
+		/* Rï¿½cupï¿½ration des champs du formulaire. */
 		String email = request.getParameter( CHAMP_EMAIL );
 		String motDePasse = request.getParameter( CHAMP_PASS );
 
@@ -47,11 +47,11 @@ public class Login extends HttpServlet {
 		} catch ( Exception e ) {
 			erreurs.put( CHAMP_EMAIL, e.getMessage() );
 		}
-	    /* Stockage du résultat et des messages d'erreur dans l'objet request */
+	    /* Stockage du rÃ©sultat et des messages d'erreur dans l'objet request */
         request.setAttribute( ATT_ERREURS, erreurs );
         request.setAttribute( ATT_RESULTAT, resultat );
 
-        /* Transmission de la paire d'objets request/response à notre JSP */
+        /* Transmission de la paire d'objets request/response Ã  notre JSP */
         this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
 	}
 

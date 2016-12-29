@@ -22,19 +22,20 @@
       <br />
       <br />
 
-	<form action="menu" method="post">
-		&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<div ><button class="button" type="submit" name="button1" value="button1">CONSULTER
-			MES DEMANDES</button>
-		<button class="button" type="submit" name="button2" value="button2">CREER
-			UNE DEMANDE</button>
-		<button class="button" type="submit" name="button3" value="button3">DECONNEXION</button></div>
-	</form>
+<form action="demande" method="post" >
+		&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+	<div>
+			<button class="button" id ="button1" type="text" name="button1" value="Propreté" >Propreté</button>
+			<button class="button" id ="button2" type="text" name="button2" value="Eclairage">Eclairage</button>
+			<button class="button" id ="button3" type="text" name="button3" value="Sécurité et nuissance" >Sécurité et nuissance</button>
+			<button class="button" id ="button4" type="text" name="button4" value="Espaces verts" >Espaces verts</button>
+			<button class="button" id ="button5" type="text" name="button5" value="Transport"/>Transport</button>
+		</div>
 	<br>
       <fieldset>
                 <legend>Nouveau signalement</legend>
                 <p>Vous pouvez signaler un incident par ce formulaire.</p>
         
-		     <form action="demande" method="post" >
                 <label for="importance">Importance <span class="requis">*</span></label>
                 <input type="text" id="importance" name="importance" value="" size="20" maxlength="60" />
                 <span class="erreur">${erreurs['importance']}</span>
@@ -64,12 +65,11 @@
                 
                 <br />
 
-                <input type="submit" value="Envoyer" class="sansLabel" />
-                <br />
                 <p class="${empty erreurs ? 'succes' : 'erreur'}">${resultat}</p>
                 <br/>
                 <br/>
-        </form>
+ 
         </fieldset>
+     </form>
     </body>
 </html>
