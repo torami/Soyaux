@@ -1,4 +1,4 @@
-package com.disp.servlets;
+package com.disp.clients;
 
 import java.io.IOException;
 import java.sql.SQLException;

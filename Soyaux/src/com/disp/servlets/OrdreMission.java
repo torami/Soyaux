@@ -53,7 +53,7 @@ public class OrdreMission extends HttpServlet {
 		Map<String, String> erreurs = new HashMap<String, String>();
 		this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
 
-		/* Récupération des champs du formulaire. */
+		/* Rï¿½cupï¿½ration des champs du formulaire. */
 
 		String agent = request.getParameter( Champagent );
 		String intervenant = request.getParameter( Champintervenant );
@@ -66,13 +66,13 @@ public class OrdreMission extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		/* Initialisation du résultat global de la validation. */
+		/* Initialisation du rï¿½sultat global de la validation. */
 		if ( erreurs.isEmpty() ) {
-			resultat = "Succès de l'émission de l'ordre de mission";
+			resultat = "SuccÃ¨s de l'Ã©mission de l'orde de mission";
 		} else {
-			resultat = "Échec de l'émission de l'ordre de mission";
+			resultat = " echec d'ajout de l'ordre de mission";
 		}
-		/* Stockage du résultat et des messages d'erreur dans l'objet request */
+		/* Stockage du rÃ©sultat et des messages d'erreur dans l'objet request */
 		request.setAttribute( ATT_ERREURS, erreurs );
 		request.setAttribute( ATT_RESULTAT, resultat );
 
