@@ -42,8 +42,13 @@ public class LoginMairie extends HttpServlet {
 		/* Validation du champ email. */
 		try {
 			validationEmail( email );
-			   RequestDispatcher rd=request.getRequestDispatcher("myservlet");  
-		        rd.forward(request,response);  
+		/**
+		 * 	String varJava = "aaa";
+		 * 	request.setAttribute("monVar",varJava);
+
+		 */
+			getServletContext().getRequestDispatcher("/myservlet").forward(request, response);
+ 
 		} catch ( Exception e ) {
 			erreurs.put( CHAMP_EMAIL, e.getMessage() );
 		}
@@ -52,7 +57,7 @@ public class LoginMairie extends HttpServlet {
         request.setAttribute( ATT_RESULTAT, resultat );
 
         /* Transmission de la paire d'objets request/response � notre JSP */
-        this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
+//        this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
 	}
 
 	/**

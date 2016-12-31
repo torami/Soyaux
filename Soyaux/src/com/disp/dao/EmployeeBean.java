@@ -3,8 +3,11 @@ package com.disp.dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import com.disp.bean.Demande;
 
 public class EmployeeBean {
 	public static  void create(int empId, String name, String jobTitle,String department, String password) throws SQLException {
@@ -41,6 +44,33 @@ public class EmployeeBean {
 		}  
 		return;
 	}
+	public static String getDepartementByName(String name) {
+		try
+		{
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection con=DriverManager.getConnection(  
+					"jdbc:mysql://localhost:3306/signalement","root",""); 
+
+			// create the java statement
+			PreparedStatement statement = con.prepareStatement("SELECT department from employees WHERE name = ?");
+			statement.setString(1, name);
+			ResultSet rs = statement.executeQuery();
+			while(rs.next())
+			{
+			    return rs.getString("department");
+			}
+			   rs.close ();
+			}
+		catch (Exception e)
+		{
+			System.err.println("Got an exception! ");
+			System.err.println(e.getMessage());
+		}
+		return null;}
+	public static void main(String args[]) throws SQLException{  
+
+		 System.out.println(getDepartementByName("Rami TORKHANI"));
 
 	
+	}  
 }

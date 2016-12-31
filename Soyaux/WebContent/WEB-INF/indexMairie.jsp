@@ -16,7 +16,8 @@
       <br />
       <br />
       <br />
-
+	<% String r_unite= (String)(request.getAttribute("monVar"));%>
+	<input type="hidden" value="<% out.print(r_unite); %>>"/>
 	<form action="index" method="post">
 	<center><button class="button" type="submit" name="button1" value="button1">CONSULTER LES DEMANDES</button>
 		<button class="button" type="submit" name="button2" value="button2">CONSULTER LES ORDRES DE MISSION</button>
