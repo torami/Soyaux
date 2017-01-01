@@ -7,8 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import com.disp.bean.Demande;
-
 public class EmployeeBean {
 	public static  void create(int empId, String name, String jobTitle,String department, String password) throws SQLException {
 		try {
@@ -67,10 +65,41 @@ public class EmployeeBean {
 			System.err.println(e.getMessage());
 		}
 		return null;}
+	public static boolean Authentification(String name,String Pass) {
+		String SQL = "select name,password from employees";
+		try
+		{
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection con=DriverManager.getConnection(  
+					"jdbc:mysql://localhost:3306/signalement","root",""); 
+
+			// create the java statement
+			Statement st = con.createStatement();
+
+			// execute the query, and get a java resultset
+			ResultSet rs = st.executeQuery(SQL);
+			// iterate through the java resultset
+			while (rs.next())
+			{
+				if(rs.getString("name").equals(name) && rs.getString("password").equals(Pass)){
+					return true;
+				}
+		
+			}
+			
+			st.close();
+		}
+		catch (Exception e)
+		{
+			System.err.println("Got an exception! ");
+			System.err.println(e.getMessage());
+		}
+	return false;	
+	}
+
 	public static void main(String args[]) throws SQLException{  
-
+		create(1, "Bruno TRAVERSON", "Agent", "Propreté", "password");
 		 System.out.println(getDepartementByName("Rami TORKHANI"));
-
-	
+		 System.out.println(Authentification("Rami ", "Helios"));
 	}  
 }

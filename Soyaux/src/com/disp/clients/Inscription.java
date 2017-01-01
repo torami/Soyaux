@@ -4,15 +4,17 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import com.disp.dao.InscriptionBean;
 
 public class Inscription extends HttpServlet {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public static final String VUE          = "/WEB-INF/inscription.jsp";
 	public static final String CHAMP_EMAIL  = "email";
 	public static final String CHAMP_PASS   = "motdepasse";

@@ -1,16 +1,17 @@
 package com.disp.servlets;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import sun.rmi.server.Dispatcher;
+import com.disp.dao.EmployeeBean;
+
 
 
 @WebServlet("/LoginSoyau")
@@ -41,36 +42,29 @@ public class LoginMairie extends HttpServlet {
 
 		/* Validation du champ email. */
 		try {
-			validationEmail( email );
-		/**
-		 * 	String varJava = "aaa";
-		 * 	request.setAttribute("monVar",varJava);
+			System.out.println(EmployeeBean.Authentification(email, motDePasse));
 
-		 */
-			getServletContext().getRequestDispatcher("/myservlet").forward(request, response);
- 
+			if(EmployeeBean.Authentification(email, motDePasse)){
+
+				String departement = EmployeeBean.getDepartementByName(email);
+				System.out.println(departement);
+			  	request.setAttribute("dept",departement);
+				getServletContext().getRequestDispatcher("/GetDemande").forward(request, response);
+			}
+			else{
+				PrintWriter out = response.getWriter();  
+				response.setContentType("text/html");  
+				out.println("<script type=\"text/javascript\">");  
+				out.println("alert('ces corrdonnées n'existent pas dans notre base de données');");  
+				out.println("</script>");
+				response.sendRedirect("LoginSoyau");
+			}
 		} catch ( Exception e ) {
 			erreurs.put( CHAMP_EMAIL, e.getMessage() );
 		}
 	    /* Stockage du résultat et des messages d'erreur dans l'objet request */
         request.setAttribute( ATT_ERREURS, erreurs );
         request.setAttribute( ATT_RESULTAT, resultat );
-
-        /* Transmission de la paire d'objets request/response � notre JSP */
-//        this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
 	}
 
-	/**
-	 * Valide l'adresse mail saisie.
-	 */
-	private void validationEmail( String email ) throws Exception {
-		if ( email != null && email.trim().length() != 0 ) {
-			if ( !email.matches( "([^.@]+)(\\.[^.@]+)*@([^.@]+\\.)+([^.@]+)" ) ) {
-				throw new Exception( "Merci de saisir une adresse mail valide." );
-			}
-		} else {
-			throw new Exception( "Merci de saisir une adresse mail." );
-		}
-	}
-	private void validationMotsDePasse( String motDePasse ) throws Exception{}
 }

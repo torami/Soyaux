@@ -2,8 +2,9 @@
 	pageEncoding="ISO-8859-1"%>
 <% Class.forName("com.mysql.jdbc.Driver"); %>
 <% java.sql.Connection con =  
- java.sql.DriverManager.getConnection("jdbc:mysql://localhost:3306/signalement","root","");%> 
-<% java.sql.Statement statement = con.createStatement(); %> 
+ java.sql.DriverManager.getConnection("jdbc:mysql://localhost:3306/signalement","root","");%>
+<%String sql =""; %> 
+<% java.sql.PreparedStatement statement = con.prepareStatement( "select * from demandes where object = ?"); %> 
 <% java.sql.ResultSet rs; %> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -28,11 +29,11 @@
 		l'éclairage, transport)
 	</h3>
 	&nbsp&nbsp&nbsp
-		<form action="index" method="post">
-	<div><button class="button" type="submit" name="button1" value="button1">CONSULTER LES DEMANDES</button>
-		<button class="button" type="submit" name="button2" value="button2">CONSULTER LES ORDRES DE MISSION</button>
-		<button class="button" type="submit" name="button3" value="button2">CREER UN ORDRE DE MISSION</button>
-		<button class="button" type="submit" name="button4" value="button3">DECONNEXION</button>
+		<form action="liste" method="post">
+<div>   <button class="button" type="text" name="button1" value="button1">CONSULTER LES DEMANDES</button>
+		<button class="button" type="text" name="button2" value="button2">CONSULTER LES ORDRES DE MISSION</button>
+		<button class="button" type="text" name="button3" value="button3">CREER UN ORDRE DE MISSION</button>
+		<button class="button" type="text" name="button4" value="button4">DECONNEXION</button>
 	</div>
 		
 	</form>
@@ -41,8 +42,8 @@
 	<br />
 	<fieldset>
                 <legend>Liste signalement</legend>
-        
-	<form method="post" action="ordremission">
+    <% String r_unite= (String)(request.getAttribute("dept"));%>
+	<input type="hidden" value="<% out.print(r_unite); %>>"/>   
 				<br />
 	<br />
 	<br />
@@ -59,7 +60,8 @@
 					
 					
 				</tr>
-				<% rs = statement.executeQuery("SELECT * FROM demandes");  %>
+				<% statement.setString(1, r_unite); %>
+				<% rs = statement.executeQuery();  %>
 				<% while (rs.next()) { %>
 				<tr>
 					<td><%= rs.getString("importance") %></td>
@@ -69,14 +71,15 @@
 					<td><%= rs.getString("place") %></td>
 					<td><%= rs.getInt("idreporter") %></td>
 					<td><%= rs.getString("state") %></td>
-					<td><input type="submit" value="Traiter" name="b1" /></td>
-					
+					<form method="post" action="ordremission">
+						<td><input type="submit" value="Traiter" name="b1" /></td>
+					</form>
 				
 				</tr>
 				<% } %>
 			</table>
 			<br />
-	</form></fieldset>
+	</fieldset>
 
 
 </body>

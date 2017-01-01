@@ -65,7 +65,7 @@ public class Demande extends HttpServlet {
 		if( sig != null){
 			EventManager.ProduceEvent(sig, event,"");
 			try {
-				DemandesBean.create(1, importance, objet, description, commentaire, adresse, 1);
+				DemandesBean.create(1, importance, event, description, commentaire, adresse, 1);
 				//servlet code
 				PrintWriter out = response.getWriter();  
 				response.setContentType("text/html");  

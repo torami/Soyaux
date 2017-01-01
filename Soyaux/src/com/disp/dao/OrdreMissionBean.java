@@ -46,7 +46,7 @@ public class OrdreMissionBean {
 				String 	detailIntervention = rs.getString("detailIntervention");
 
 				// print the results
-				System.out.format("%s, %s, %s, %s\n", agent, intervenant, dateIntervention, detailIntervention);
+				System.out.format("%s, %s, %s, %s\n",traitId,sig_sig_id, agent, intervenant, dateIntervention, detailIntervention);
 			}
 			st.close();
 		}

@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.disp.constants.Const;
+
 /**
  * Servlet implementation class OrdreMission
  */
@@ -17,6 +19,8 @@ public class GetDemande extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	public static final String VUE   = "/WEB-INF/ListeSignalement.jsp";
 	public static final String CHAMP_STATE  = "state";
+	public static final String liste = "button1";
+	Const cs = new Const();
 
     /**
      * @see HttpServlet#HttpServlet()
@@ -39,13 +43,20 @@ public class GetDemande extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String state = request.getParameter( CHAMP_STATE );
-	    if (request.getParameter("b1") != null) {
-			   RequestDispatcher rd=request.getRequestDispatcher("OrdreMission");  
-		        rd.forward(request,response);
+		String cons_d = request.getParameter(cs.CONSULTER_D  ); 
+		String cons_o = request.getParameter( cs.CONSULTER_O ); 
+		String create_o = request.getParameter( cs.CREER_O ); 
+		String deconnexion = request.getParameter( cs.DECONNEXION ); 
+
+		if (cons_d !=null) {
+				request.setAttribute("dept","Propreté");
+				this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
+		}
+		if (request.getParameter("button3") != null) {
+			   response.sendRedirect("OrdreMission");
 		}
 		/* Affichage de la page d'inscription */
-		this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
+//		this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
 	}
 
 }

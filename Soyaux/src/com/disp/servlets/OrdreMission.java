@@ -5,12 +5,14 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.jms.JMSException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.disp.activmq.Consumer;
 import com.disp.dao.DemandesBean;
 import com.disp.dao.OrdreMissionBean;
 
@@ -25,9 +27,7 @@ public class OrdreMission extends HttpServlet {
 	public static final String Champintervenant = "intervenant";
 	public static final String ChampdateIntervention = "dateIntervention";
 	public static final String ChampdetailIntervention = "detailIntervention";
-
-	public static final String ATT_ERREURS  = "erreurs";
-	public static final String ATT_RESULTAT = "resultat";
+	public static final String liste = "button1";
 
     /**
      * @see HttpServlet#HttpServlet()
@@ -49,32 +49,28 @@ public class OrdreMission extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String resultat;
-		Map<String, String> erreurs = new HashMap<String, String>();
+		
 		this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
 
-		/* R�cup�ration des champs du formulaire. */
+		/* Récupération des champs du formulaire. */
 
 		String agent = request.getParameter( Champagent );
 		String intervenant = request.getParameter( Champintervenant );
 		String dateIntervention = request.getParameter( ChampdateIntervention );
 		String detailIntervention = request.getParameter( ChampdetailIntervention );
+		String btn = request.getParameter( liste );
 		try {
 			OrdreMissionBean.create(1,1, agent, intervenant, dateIntervention, detailIntervention);
 			DemandesBean.updateState(1);
+			try {
+				Consumer.consume("Propreté", agent);
+			} catch (JMSException e) {
+				e.printStackTrace();
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		/* Initialisation du r�sultat global de la validation. */
-		if ( erreurs.isEmpty() ) {
-			resultat = "Succès de l'émission de l'orde de mission";
-		} else {
-			resultat = " echec d'ajout de l'ordre de mission";
-		}
-		/* Stockage du résultat et des messages d'erreur dans l'objet request */
-		request.setAttribute( ATT_ERREURS, erreurs );
-		request.setAttribute( ATT_RESULTAT, resultat );
 
 	}
 

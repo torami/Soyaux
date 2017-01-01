@@ -6,6 +6,11 @@ public class Const {
 	public  final String EVENT_Sécurité = "button3";
 	public  final String EVENT_EspacesVerts = "button4";
 	public  final String EVENT_Transport = "button5";
+	
+	public  final String CONSULTER_D = "button1";
+	public  final String CONSULTER_O = "button2";
+	public  final String CREER_O = "button3";
+	public  final String DECONNEXION = "button4";
 	/**
 	 * Methode qui retourne le type d'evenement a partir de la jsp
 	 * @param event_eclairage

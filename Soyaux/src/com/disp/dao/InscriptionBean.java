@@ -1,8 +1,6 @@
 package com.disp.dao;
 
 import java.sql.*;
-
-import com.disp.bean.Demande;
 import com.disp.bean.Inscription;  
 public class InscriptionBean{  
 

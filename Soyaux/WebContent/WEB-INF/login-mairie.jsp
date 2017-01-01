@@ -21,7 +21,7 @@
                 <legend>Login</legend>
         
                 
-                <label for="email">Adresse email <span class="requis">*</span></label>
+                <label for="email">Nom et Prénom <span class="requis">*</span></label>
                 <input type="text" id="email" name="email" value="" size="20" maxlength="60" />
                 <span class="erreur">${erreurs['email']}</span>
                 

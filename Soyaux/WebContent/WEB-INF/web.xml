@@ -43,14 +43,6 @@
     <url-pattern>/ordremission</url-pattern>
   </servlet-mapping>
   <servlet>
-    <servlet-name>MyServlet</servlet-name>
-    <servlet-class>com.disp.servlets.MyServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>MyServlet</servlet-name>
-    <url-pattern>/index</url-pattern>
-  </servlet-mapping>
-  <servlet>
     <servlet-name>MenuCitoyen</servlet-name>
     <servlet-class>com.disp.servlets.MenuCitoyen</servlet-class>
   </servlet>
