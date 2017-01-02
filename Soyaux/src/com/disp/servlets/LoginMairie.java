@@ -1,16 +1,16 @@
 package com.disp.servlets;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import com.disp.dao.EmployeeBean;
+import com.disp.dao.SessionBean;
 
 
 
@@ -49,7 +49,9 @@ public class LoginMairie extends HttpServlet {
 				String departement = EmployeeBean.getDepartementByName(email);
 				System.out.println(departement);
 			  	request.setAttribute("dept",departement);
-				getServletContext().getRequestDispatcher("/GetDemande").forward(request, response);
+			  	/*Déclaration d'une session par la BD */
+			  	SessionBean.create(departement);
+				getServletContext().getRequestDispatcher("/WEB-INF/ListeSignalement.jsp").forward(request, response);
 			}
 			else{
 				PrintWriter out = response.getWriter();  
@@ -57,7 +59,6 @@ public class LoginMairie extends HttpServlet {
 				out.println("<script type=\"text/javascript\">");  
 				out.println("alert('ces corrdonnées n'existent pas dans notre base de données');");  
 				out.println("</script>");
-				response.sendRedirect("LoginSoyau");
 			}
 		} catch ( Exception e ) {
 			erreurs.put( CHAMP_EMAIL, e.getMessage() );

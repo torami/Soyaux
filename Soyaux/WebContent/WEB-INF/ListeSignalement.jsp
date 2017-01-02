@@ -43,7 +43,7 @@
 	<fieldset>
                 <legend>Liste signalement</legend>
     <% String r_unite= (String)(request.getAttribute("dept"));%>
-	<input type="hidden" value="<% out.print(r_unite); %>>"/>   
+	<input type="hidden" name="depart" value="<% out.print(r_unite); %>>"/>   
 				<br />
 	<br />
 	<br />

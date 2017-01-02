@@ -99,6 +99,9 @@ public class EmployeeBean {
 
 	public static void main(String args[]) throws SQLException{  
 		create(1, "Bruno TRAVERSON", "Agent", "Propreté", "password");
+		create(2, "Jannik Laval", "Agent", "Securité", "password");
+		create(3, "Nejib Moalla", "Agent", "Eclairage", "password");
+
 		 System.out.println(getDepartementByName("Rami TORKHANI"));
 		 System.out.println(Authentification("Rami ", "Helios"));
 	}  
