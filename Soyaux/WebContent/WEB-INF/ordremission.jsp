@@ -17,11 +17,11 @@
       <br />
       <br />
       <br />
-  <form method="post" action="liste">
-  <div>   <button class="button" type="submit" name="button1" value="button1">CONSULTER LES DEMANDES</button>
-		<button class="button" type="submit" name="button2" value="button2">CONSULTER LES ORDRES DE MISSION</button>
-		<button class="button" type="submit" name="button3" value="button3">CREER UN ORDRE DE MISSION</button>
-		<button class="button" type="submit" name="button4" value="button4">DECONNEXION</button>
+  <form method="post" action="ordremission">
+  <div>   <button class="button" type="text" name="button1" value="button1">CONSULTER LES DEMANDES</button>
+		<button class="button" type="text" name="button2" value="button2">CONSULTER LES ORDRES DE MISSION</button>
+		<button class="button" type="text" name="button3" value="button3">CREER UN ORDRE DE MISSION</button>
+		<button class="button" type="text" name="button4" value="button4">DECONNEXION</button>
 	</div>
 		<br /> <br /> <br />
       

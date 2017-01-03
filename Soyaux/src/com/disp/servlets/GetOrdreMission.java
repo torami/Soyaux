@@ -1,8 +1,6 @@
 package com.disp.servlets;
 
 import java.io.IOException;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,23 +8,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.disp.constants.Const;
-import com.disp.dao.SessionBean;
 
 /**
- * Servlet implementation class OrdreMission
+ * Servlet implementation class GetOrdreMission
  */
-@WebServlet("/GetDemande")
-public class GetDemande extends HttpServlet {
+@WebServlet("/GetOrdreMission")
+public class GetOrdreMission extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	public static final String VUE   = "/WEB-INF/ListeSignalement.jsp";
-	public static final String CHAMP_STATE  = "state";
-	public static final String dept = "depart";
+	public static final String VUE   = "/WEB-INF/listemission.jsp";
 	Const cs = new Const();
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetDemande() {
+    public GetOrdreMission() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,9 +30,8 @@ public class GetDemande extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		/* Affichage de la page d'inscription */
-		
 		this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
+	
 	}
 
 	/**
@@ -48,28 +42,7 @@ public class GetDemande extends HttpServlet {
 		String cons_o = request.getParameter( cs.CONSULTER_O ); 
 		String create_o = request.getParameter( cs.CREER_O ); 
 		String deconnexion = request.getParameter( cs.DECONNEXION ); 
-		String departement = request.getParameter(dept);
-		System.out.println("heyyy"+departement);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/ListeSignalement.jsp"); ;
-		if (cons_d !=null) {
-				
-				request.setAttribute("dept",SessionBean.getDept());
-				dispatcher = request.getRequestDispatcher("/WEB-INF/ListeSignalement.jsp");
-		}
-		if (cons_o !=null) {
-			dispatcher = request.getRequestDispatcher("/WEB-INF/listemission.jsp");
-
-		}
-		if (create_o != null){
-			dispatcher = request.getRequestDispatcher("/WEB-INF/ordremission.jsp");
-
-		}
-		if (deconnexion != null) {
-			SessionBean.InitSession();
-			dispatcher = request.getRequestDispatcher("/WEB-INF/login-mairie.jsp");
-		}
-
-		dispatcher.forward(request, response);
+		this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
 
 	}
 
