@@ -2,20 +2,35 @@ package com.disp.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 public class OrdreMissionBean {
-	public static  void create(int traitId, int sig_sig_id, String agent,String intervenant,String dateIntervention,String detailIntervention) throws SQLException {
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
+	public static  void create( int sig_sig_id, String agent,String intervenant,String dateIntervention,String detailIntervention) throws SQLException {
+    	try {
+        	
+  		  // create a mysql database connection
+  	      String myDriver = "org.gjt.mm.mysql.Driver";
+  	      String myUrl = "jdbc:mysql://localhost/signalement";
+  	      Class.forName(myDriver);
+  	      Connection conn = DriverManager.getConnection(myUrl, "root", "");
+	      // the mysql insert statement
+	      String query = " insert into ordremission (sig_sig_id, agent, intervenant, dateIntervention, detailIntervention)"
+	        + " values ( ?, ?, ?, ?, ?)";
+	      // create the mysql insert preparedstatement
+	      PreparedStatement preparedStmt = conn.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
 
-			Connection con=DriverManager.getConnection(  
-					"jdbc:mysql://localhost:3306/signalement","root",""); 
-			Statement stmt=con.createStatement(); 
-			String SQL = "insert into ordremission (traitId, sig_sig_id, agent, intervenant,dateIntervention,detailIntervention) values ("+traitId+",'"+sig_sig_id+"','"+agent+"','"+intervenant+"','"+dateIntervention+"','"+detailIntervention+"')";
-			stmt.executeUpdate(SQL);  
+	      preparedStmt.setInt (1, sig_sig_id);
+	      preparedStmt.setString (2, agent);
+	      preparedStmt.setString(3, intervenant);
+	      preparedStmt.setString(4, dateIntervention);
+	      preparedStmt.setString(5, detailIntervention);
+   	      // execute the preparedstatement
+	      preparedStmt.execute();
+	      
+	      conn.close();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -56,6 +71,7 @@ public class OrdreMissionBean {
 			System.err.println(e.getMessage());
 		}}
 	public static void main(String args[]) throws SQLException{  
+		create(1, "dd", "", "", "");
 		getOrdreMission();
 //		updateState(3);
 //		Demande dem = getSignalementByID(1);

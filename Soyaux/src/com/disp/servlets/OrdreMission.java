@@ -18,6 +18,7 @@ import com.disp.constants.Const;
 import com.disp.dao.DemandesBean;
 import com.disp.dao.OrdreMissionBean;
 import com.disp.dao.SessionBean;
+import com.disp.event.EventManager;
 
 /**
  * Servlet implementation class OrdreMission
@@ -30,7 +31,10 @@ public class OrdreMission extends HttpServlet {
 	public static final String Champintervenant = "intervenant";
 	public static final String ChampdateIntervention = "dateIntervention";
 	public static final String ChampdetailIntervention = "detailIntervention";
+	public static final String indice = "SignalementID";
+
 	Const cs = new Const();
+	com.disp.bean.OrdreDeMission mission = new com.disp.bean.OrdreDeMission();
 
     /**
      * @see HttpServlet#HttpServlet()
@@ -60,26 +64,33 @@ public class OrdreMission extends HttpServlet {
 		String intervenant = request.getParameter( Champintervenant );
 		String dateIntervention = request.getParameter( ChampdateIntervention );
 		String detailIntervention = request.getParameter( ChampdetailIntervention );
-		
+		String ind = request.getParameter(indice); 
+		System.out.println("ATTTTTTTRI"+ind);
+
 		String cons_d = request.getParameter(cs.CONSULTER_D  ); 
 		String cons_o = request.getParameter( cs.CONSULTER_O ); 
 		String create_o = request.getParameter( cs.CREER_O ); 
 		String deconnexion = request.getParameter( cs.DECONNEXION ); 
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/ordremission.jsp");
+		RequestDispatcher dispatcher =request.getRequestDispatcher("/WEB-INF/ListeSignalement.jsp");
+		
+		
+		if(InputState(agent, intervenant, dateIntervention, detailIntervention)){
+			mission.setAgent(agent);
+			mission.setIntervenant(intervenant);
+			mission.setDateIntervention(dateIntervention);
+			mission.setDetailIntervention(detailIntervention);
+		}
+	
+		
 		if(agent!=null && !agent.equals("")){
-		try {
-			OrdreMissionBean.create(1,1, agent, intervenant, dateIntervention, detailIntervention);
-			DemandesBean.updateState(1);
 			try {
-				Consumer.consume("Propreté", agent);
-			} catch (JMSException e) {	
+				EventManager.ConsumeEvent(SessionBean.getDept(), mission,Integer.parseInt(ind));
+			} catch (JMSException | SQLException e) {
 				e.printStackTrace();
 			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}}
-	 System.out.println("cons_d");
+		}
+
+		
 		if (cons_d !=null) {
 				
 				request.setAttribute("dept",SessionBean.getDept());
@@ -90,7 +101,7 @@ public class OrdreMission extends HttpServlet {
 
 		}
 		if (create_o != null){
-			response.sendRedirect("OrdreMission");
+			dispatcher = request.getRequestDispatcher("/WEB-INF/ordremission.jsp");
 		}
 		
 		if (deconnexion != null) {
@@ -101,5 +112,14 @@ public class OrdreMission extends HttpServlet {
 		dispatcher.forward(request, response);
 
 	}
+	private boolean InputState( String agent, String intervenant,String dateIntervention,String detailIntervention) {
 
+		if (agent.isEmpty() && intervenant.isEmpty() && dateIntervention.isEmpty() && detailIntervention.isEmpty() ) 
+		{return false;
+		}
+		else
+			return true;
+
+	}
 }
+

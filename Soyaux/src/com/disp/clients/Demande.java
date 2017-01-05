@@ -23,8 +23,8 @@ public class Demande extends HttpServlet {
 	public static final String PLACE = "adresse";
 	public static final String ATT_ERREURS  = "erreurs";
 	public static final String ATT_RESULTAT = "resultat";
-	com.disp.bean.Demande sig = new com.disp.bean.Demande();
 	Const cs = new Const();
+	com.disp.bean.Demande sig = new com.disp.bean.Demande();
 	public Demande() {
 		super();
 	}
@@ -35,6 +35,8 @@ public class Demande extends HttpServlet {
 
 	public void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException{
 		/* récupération des champs du formulaire. */
+	
+
 		String importance = request.getParameter( IMPORTANCE );
 		String objet = request.getParameter( OBJECT );
 		String description = request.getParameter( DESCRIPTION );
@@ -48,8 +50,8 @@ public class Demande extends HttpServlet {
 		String event_trans = request.getParameter( cs.EVENT_Transport); 
 		
 		/*s'assurer de la complétude des champs*/
-		if(InputState(importance, objet, description, commentaire, adresse) == false){
-			sig.setId(1);
+		boolean etat = InputState(importance, objet, description, commentaire, adresse);
+		if(etat == false){
 			sig.setComment(commentaire);
 			sig.setDescription(description);
 			sig.setImportance(importance);
@@ -62,30 +64,37 @@ public class Demande extends HttpServlet {
 		String event = cs.EventType(event_eclairage, event_proprete, event_ev, event_sec, event_trans);
 
 		/*Call Event Manager*/
-		if( sig != null){
-			EventManager.ProduceEvent(sig, event,"");
-			try {
-				DemandesBean.create(1, importance, event, description, commentaire, adresse, 1);
+		PrintWriter out = response.getWriter();  
+		response.setContentType("text/html");  
+
+			if( etat == false){
+				try {
+					EventManager.ProduceEvent(sig, event,"");
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				//servlet code
-				PrintWriter out = response.getWriter();  
-				response.setContentType("text/html");  
 				out.println("<script type=\"text/javascript\">");  
 				out.println("alert('Votre Signalement a été pris en compte vous recevez un email lors du traitement de ce dernier');");  
 				out.println("</script>");
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}}
+			}
+			else{
+				out.println("<script type=\"text/javascript\">");  
+				out.println("alert('Signalement non pertinent');");  
+				out.println("</script>");
+				response.sendRedirect("/Soyaux/demande");}
+			}
+		
+		
 
-		/* Transmission de la paire d'objets request/response à notre JSP */
-//		this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
-	}
+	
 
 
 	private boolean InputState( String importance, String objet,String description,String commentaire, String adresse) {
 		
 		if (description.isEmpty() && importance.isEmpty() && objet.isEmpty() && commentaire.isEmpty() && adresse.isEmpty()) 
-		{	System.out.println("ALL RIGHT");
-			return true;
+			{return true;
 		}
 		else
 			return false;

@@ -5,22 +5,56 @@ import java.sql.*;
 import com.disp.bean.Demande;  
 public class DemandesBean{  
 
+	
+    // Use the MySQL LAST_INSERT_ID()
+    // function to do the same thing as getGeneratedKeys()
 
-	public static void create(int id, String importance, String object,String description,String comment,String place,int idreporter) throws SQLException {
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
+    public static int id () throws SQLException{
+		Connection conn=DriverManager.getConnection(  
+				"jdbc:mysql://localhost:3306/signalement","root","");
+    	Statement stmt = null;
+    	ResultSet rs = null;
+        stmt = conn.createStatement();
 
-			Connection con=DriverManager.getConnection(  
-					"jdbc:mysql://localhost:3306/signalement","root",""); 
-			Statement stmt=con.createStatement(); 
-			String SQL = "insert into demandes (id, importance, object, description, comment, place, idreporter,state) values ("+id+",'"+importance+"','"+object+"','"+description+"','"+comment+"','"+place+"',"+idreporter+","+"'NOT SOLVED')";
-			stmt.executeUpdate(SQL);  
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}  
-		return;
-	}
+    int autoIncKeyFromFunc = -1;
+    rs = stmt.executeQuery("SELECT LAST_INSERT_ID() FROM demandes");
+
+    if (rs.next()) {
+        autoIncKeyFromFunc = rs.getInt(1);
+    } else {
+        // throw an exception from here
+    }
+	return autoIncKeyFromFunc;}
+    public static void create( String importance, String object,String description,String comment,String place,int idreporter) throws SQLException {
+    	try {
+    	
+    		  // create a mysql database connection
+    	      String myDriver = "org.gjt.mm.mysql.Driver";
+    	      String myUrl = "jdbc:mysql://localhost/signalement";
+    	      Class.forName(myDriver);
+    	      Connection conn = DriverManager.getConnection(myUrl, "root", "");
+    	      // the mysql insert statement
+    	      String query = " insert into demandes (importance, object, description, comment, place,idreporter,state)"
+    	        + " values ( ?, ?, ?, ?, ?, ?, ?)";
+    	      // create the mysql insert preparedstatement
+    	      PreparedStatement preparedStmt = conn.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
+    
+    	      preparedStmt.setString (1, importance);
+    	      preparedStmt.setString (2, object);
+    	      preparedStmt.setString(3, description);
+    	      preparedStmt.setString(4, comment);
+    	      preparedStmt.setString(5, place);
+    	      preparedStmt.setInt(6, 5);
+    	      preparedStmt.setString(7, "NOT SOLVED");
+    	      // execute the preparedstatement
+    	      preparedStmt.execute();
+    	      
+    	      conn.close();
+
+    	} catch (ClassNotFoundException e) {
+    		System.err.println("HERE");}  
+    	return;
+    }
 	public static void updateState(int id) throws SQLException {
 		try {		
 		Class.forName("com.mysql.jdbc.Driver");
@@ -110,8 +144,9 @@ public class DemandesBean{
 		return null;}
 	
 	public static void main(String args[]) throws SQLException{  
-//		create(3,"Urgent","Lampe","lampe a chang�","RAS","120 boulevard",1);
-		getSignalement();
+	create("Urgent","Lampe","lampe a chang�","RAS","120 boulevard",1);
+//		getSignalement();
+//	System.out.println("l'id est "+ id());
 //		updateState(3);
 //		Demande dem = getSignalementByID(1);
 	

@@ -28,7 +28,10 @@
             <fieldset>
                 <legend>Nouveau ordre de mission</legend>
                 <p>Vous pouvez déclarer un ordre de mission par ce formulaire.</p>
-
+		   	   <label for="SignalementID">SignalementID <span class="requis">*</span></label>
+                <input type="text" id="SignalementID" name="SignalementID" value="" size="20" maxlength="20" />
+                <span class="erreur">${erreurs['agent']}</span>
+				</br>
                 <label for="agent">agent <span class="requis">*</span></label>
                 <input type="text" id="agent" name="agent" value="" size="20" maxlength="20" />
                 <span class="erreur">${erreurs['agent']}</span>

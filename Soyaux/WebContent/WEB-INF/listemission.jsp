@@ -4,12 +4,11 @@
 <% java.sql.Connection con =  
  java.sql.DriverManager.getConnection("jdbc:mysql://localhost:3306/signalement","root","");%>
 <%String sql =""; %> 
-<% java.sql.PreparedStatement statement = con.prepareStatement( "select * from ordremission"); %> 
+<% java.sql.PreparedStatement statement = con.prepareStatement( "select * from ordremission where intervenant = ?"); %> 
 <% java.sql.ResultSet rs; %> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta charset="utf-8" />
 <title>Liste des ordres de mission</title>
 <link type="text/css" rel="stylesheet" href="style2.css" />
 </head>
@@ -43,7 +42,7 @@
 	<fieldset>
 	   <legend>Liste des ordres de mission</legend>
     <% String r_unite= (String)(request.getAttribute("dept"));%>
-	<input type="hidden" name="depart" value="<% out.print(r_unite); %>>"/>   
+	<input type="hidden" name="depart" value="<% out.print(r_unite); %>"/>   
 				<br />
 	<br />
 	<br />
@@ -56,11 +55,12 @@
 					<td><b>Modifier</b></td>
 					
 				</tr>
+				<% statement.setString(1,r_unite); %>
 				<% rs = statement.executeQuery();  %>
 				<% while (rs.next()) { %>
 				<tr>
 					<td><%= rs.getString("agent") %></td>
-					<td><%= rs.getString("intervenant") %></td>
+					<td><%= "Service " + rs.getString("intervenant") %></td>
 					<td><%= rs.getString("dateIntervention") %></td>
 					<td><%= rs.getString("detailIntervention") %></td>
 					<form method="post" action="ordremission">

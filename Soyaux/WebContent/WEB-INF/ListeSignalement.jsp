@@ -43,12 +43,13 @@
 	<fieldset>
                 <legend>Liste signalement</legend>
     <% String r_unite= (String)(request.getAttribute("dept"));%>
-	<input type="hidden" name="depart" value="<% out.print(r_unite); %>>"/>   
+	<input type="hidden" name="depart" value="<% out.print(r_unite); %>"/>   
 				<br />
 	<br />
 	<br />
 			<table border=1>
 				<tr>
+					<td><b>Réf</b></td>
 					<td><b>Importance</b></td>
 					<td><b>Objet</b></td>
 					<td><b>Description</b></td>
@@ -61,9 +62,10 @@
 					
 				</tr>
 				<% statement.setString(1, r_unite); %>
-				<% rs = statement.executeQuery();  %>
+				<% rs = statement.executeQuery(); int i =1;  %>
 				<% while (rs.next()) { %>
 				<tr>
+					<td><%= rs.getString("id") %></td>
 					<td><%= rs.getString("importance") %></td>
 					<td><%= rs.getString("object") %></td>
 					<td><%= rs.getString("description") %></td>
@@ -71,12 +73,9 @@
 					<td><%= rs.getString("place") %></td>
 					<td><%= rs.getInt("idreporter") %></td>
 					<td><%= rs.getString("state") %></td>
-					<form method="post" action="ordremission">
-						<td><input type="submit" value="Traiter" name="b1" /></td>
-					</form>
-				
+					<a href="http://localhost:8080/Soyaux/ordremission">	<td><input type="button" value="Traiter"/></a></td>
 				</tr>
-				<% } %>
+				<% i++; } %>
 			</table>
 			<br />
 	</fieldset>

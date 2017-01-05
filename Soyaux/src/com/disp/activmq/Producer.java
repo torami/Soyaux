@@ -17,7 +17,7 @@ import javax.jms.Session;
 public class Producer {
 
  
-    public static void Produce(Object body, String nameQueue)  {
+    public static void ProduceReport(Object body, String nameQueue)  {
    
             try {
                 // Create a ConnectionFactory
@@ -47,6 +47,7 @@ public class Producer {
                 producer.send(message);
  
                 // Clean up
+                producer.close();
                 session.close();
                 connection.close();
             }
