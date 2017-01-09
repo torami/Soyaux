@@ -32,7 +32,7 @@ public class EventManager {
 		System.out.println("Consumed Signalement de Type :" +typeEvent);
 		OrdreMissionBean.create(idSig, mission.getAgent(),mission.getIntervenant(), mission.getDateIntervention(), mission.getDetailIntervention());
 		DemandesBean.updateState(idSig);
-		Consumer.consume(typeEvent, mission.getAgent());
+		Consumer.consume(typeEvent, mission.getIntervenant());
 		Producer.ProduceReport(mission, "Mission"+typeEvent);
 
 		

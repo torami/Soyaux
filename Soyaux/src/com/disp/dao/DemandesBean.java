@@ -144,8 +144,11 @@ public class DemandesBean{
 		return null;}
 	
 	public static void main(String args[]) throws SQLException{  
-	create("Urgent","Lampe","lampe a chang�","RAS","120 boulevard",1);
-//		getSignalement();
+//	create("Urgent","Lampe","lampe a chang�","RAS","120 boulevard",1);
+//	create("Urgent","Lampe","lampe a chang�","RAS","120 boulevard",1);
+//	create("Urgent","Lampe","lampe a chang�","RAS","120 boulevard",1);
+
+		getSignalement();
 //	System.out.println("l'id est "+ id());
 //		updateState(3);
 //		Demande dem = getSignalementByID(1);

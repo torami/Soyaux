@@ -51,7 +51,7 @@ public class Consumer {
           };
 
         consumer.setMessageListener(listner);
-        connection.close();
+//        connection.close();
 
     }
 }

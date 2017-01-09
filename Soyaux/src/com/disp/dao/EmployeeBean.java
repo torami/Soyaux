@@ -102,7 +102,7 @@ public class EmployeeBean {
 		create(2, "Jannik Laval", "Agent", "Securité", "password");
 		create(3, "Nejib Moalla", "Agent", "Eclairage", "password");
 
-		 System.out.println(getDepartementByName("Rami TORKHANI"));
-		 System.out.println(Authentification("Rami ", "Helios"));
+//		 System.out.println(getDepartementByName("Rami TORKHANI"));
+//		 System.out.println(Authentification("Rami ", "Helios"));
 	}  
 }

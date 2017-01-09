@@ -49,7 +49,6 @@ public class GetDemande extends HttpServlet {
 		String create_o = request.getParameter( cs.CREER_O ); 
 		String deconnexion = request.getParameter( cs.DECONNEXION ); 
 		String departement = request.getParameter(dept);
-		System.out.println("heyyy"+departement);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/ListeSignalement.jsp"); ;
 		if (cons_d !=null) {
 				
