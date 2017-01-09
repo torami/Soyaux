@@ -8,7 +8,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import com.disp.dao.*;
 import com.disp.constants.*;
 import com.disp.event.EventManager;
 
@@ -71,7 +70,6 @@ public class Demande extends HttpServlet {
 				try {
 					EventManager.ProduceEvent(sig, event,"");
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				//servlet code

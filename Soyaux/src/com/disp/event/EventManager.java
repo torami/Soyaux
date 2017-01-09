@@ -10,7 +10,6 @@ import com.disp.bean.Demande;
 import com.disp.bean.OrdreDeMission;
 import com.disp.dao.DemandesBean;
 import com.disp.dao.OrdreMissionBean;
-import com.disp.dao.SessionBean;
 import com.disp.email.Email;
 
 public class EventManager {

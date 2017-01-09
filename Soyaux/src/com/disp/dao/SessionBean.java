@@ -25,7 +25,6 @@ public class SessionBean {
 			String SQL = "insert into session (label) values ('"+label+"')";
 			stmt.executeUpdate(SQL);  
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}  
 		return;
@@ -46,7 +45,6 @@ public class SessionBean {
 		catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return ;

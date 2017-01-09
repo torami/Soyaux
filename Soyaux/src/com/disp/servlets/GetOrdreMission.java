@@ -26,7 +26,7 @@ public class GetOrdreMission extends HttpServlet {
 	 */
 	public GetOrdreMission() {
 		super();
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	/**

@@ -28,7 +28,6 @@ public class GetDemande extends HttpServlet {
      */
     public GetDemande() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -48,7 +47,6 @@ public class GetDemande extends HttpServlet {
 		String cons_o = request.getParameter( cs.CONSULTER_O ); 
 		String create_o = request.getParameter( cs.CREER_O ); 
 		String deconnexion = request.getParameter( cs.DECONNEXION ); 
-		String departement = request.getParameter(dept);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/ListeSignalement.jsp"); ;
 		if (cons_d !=null) {
 				

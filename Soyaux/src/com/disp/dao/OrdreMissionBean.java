@@ -32,7 +32,6 @@ public class OrdreMissionBean {
 	      
 	      conn.close();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}  
 		return;

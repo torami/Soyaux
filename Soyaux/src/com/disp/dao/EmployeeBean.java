@@ -18,7 +18,6 @@ public class EmployeeBean {
 			String SQL = "insert into employees (empId, name, jobTitle, department, password) values ("+empId+",'"+name+"','"+jobTitle+"','"+department+"','"+password+"')";
 			stmt.executeUpdate(SQL);  
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}  
 		return;

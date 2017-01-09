@@ -22,7 +22,6 @@ public class MenuCitoyen extends HttpServlet {
      */
     public MenuCitoyen() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**

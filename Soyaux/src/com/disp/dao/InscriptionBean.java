@@ -15,7 +15,6 @@ public class InscriptionBean{
 			String SQL = "insert into citoyens (id, name, email, password) values ("+id+",'"+name+"','"+email+"','"+password+"')";
 			stmt.executeUpdate(SQL);  
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}  
 		return;

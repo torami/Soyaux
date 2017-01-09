@@ -2,9 +2,6 @@ package com.disp.servlets;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.jms.JMSException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,10 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.disp.activmq.Consumer;
 import com.disp.constants.Const;
-import com.disp.dao.DemandesBean;
-import com.disp.dao.OrdreMissionBean;
+
 import com.disp.dao.SessionBean;
 import com.disp.event.EventManager;
 
@@ -41,7 +36,6 @@ public class OrdreMission extends HttpServlet {
      */
     public OrdreMission() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
